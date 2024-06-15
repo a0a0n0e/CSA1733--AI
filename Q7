@@ -1,0 +1,34 @@
+from collections import deque
+
+def bfs_tree(tree, root):
+    if not tree:
+        return
+
+    queue = deque([(root, 0)])  # Initialize queue with root node and its level
+    current_level = 0  # Track the current level
+
+    while queue:
+        node, level = queue.popleft()  # Dequeue node and its level
+        if level > current_level:
+            print()  # Print newline to start a new level
+            current_level = level
+        print(node, end=" ")
+        for child in tree.get(node, []):
+            queue.append((child, level + 1))  # Enqueue child node with its level
+
+if __name__ == "__main__":
+    # Example tree represented as a dictionary
+    tree = {
+        'A': ['B', 'C'],
+        'B': ['D', 'E'],
+        'C': ['F'],
+        'D': [],
+        'E': ['G', 'H'],
+        'F': [],
+        'G': [],
+        'H': []
+    }
+
+    root_node = 'A'
+    print("BFS traversal on the tree starting from root node A:")
+    bfs_tree(tree, root_node)
