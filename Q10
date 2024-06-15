@@ -1,0 +1,40 @@
+import itertools
+import sys
+
+def calculate_distance(coords1, coords2):
+    """Calculate the Euclidean distance between two points."""
+    return ((coords1[0] - coords2[0])**2 + (coords1[1] - coords2[1])**2) ** 0.5
+
+def total_distance(route, cities):
+    """Calculate the total distance of a route."""
+    distance = sum(calculate_distance(cities[route[i]], cities[route[i + 1]]) for i in range(len(route) - 1))
+    distance += calculate_distance(cities[route[-1]], cities[route[0]])  # Return to start
+    return distance
+
+def tsp_brute_force(cities):
+    """Solve the Traveling Salesman Problem using brute-force."""
+    num_cities = len(cities)
+    min_distance = sys.maxsize
+    min_route = None
+    
+    for route in itertools.permutations(range(num_cities)):
+        distance = total_distance(route, cities)
+        if distance < min_distance:
+            min_distance = distance
+            min_route = route
+    
+    return min_route, min_distance
+
+if __name__ == "__main__":
+    # Example cities represented as coordinates (x, y)
+    cities = [(0, 0), (1, 2), (3, 1), (5, 3), (6, 0)]
+    
+    # Solve TSP using brute-force
+    best_route, min_distance = tsp_brute_force(cities)
+    
+    # Calculate the total distance for the best route
+    best_route_distance = total_distance(best_route, cities)
+    
+    print("Best route:", best_route)
+    print("Total distance for the best route:", best_route_distance)
+    print("Minimum cost (distance):", min_distance)
