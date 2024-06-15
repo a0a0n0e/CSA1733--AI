@@ -1,0 +1,13 @@
+% Facts
+symptom(fever).
+symptom(cough).
+symptom(sneezing).
+symptom(runny_nose).
+
+% Backward chaining procedure
+diagnose(Condition) :-
+    hypothesis(Condition),
+    writeln('Patient may have: '),
+    writeln(Condition),
+    !.
+diagnose(_).
