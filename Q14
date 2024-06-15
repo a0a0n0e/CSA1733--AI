@@ -1,0 +1,64 @@
+import math
+
+def minimax(position, maximizing_player):
+    if position.is_terminal():
+        return position.evaluate(), None
+
+    if maximizing_player:
+        max_eval = -math.inf
+        best_move = None
+        for move in position.get_possible_moves():
+            position.make_move(move, maximizing_player)
+            eval, _ = minimax(position, False)
+            position.undo_move(move)
+            if eval > max_eval:
+                max_eval = eval
+                best_move = move
+        return max_eval, best_move
+    else:
+        min_eval = math.inf
+        best_move = None
+        for move in position.get_possible_moves():
+            position.make_move(move, maximizing_player)
+            eval, _ = minimax(position, True)
+            position.undo_move(move)
+            if eval < min_eval:
+                min_eval = eval
+                best_move = move
+        return min_eval, best_move
+
+class GamePosition:
+    def __init__(self, board):
+        self.board = board
+
+    def is_terminal(self):
+        # Define terminal condition (e.g., game over)
+        return True
+
+    def evaluate(self):
+        # Evaluate the position (e.g., calculate score)
+        return 0
+
+    def get_possible_moves(self):
+        # Return a list of possible moves
+        return []
+
+    def make_move(self, move, player):
+        # Make a move on the board
+        pass
+
+    def undo_move(self, move):
+        # Undo a move on the board
+        pass
+
+if __name__ == "__main__":
+    # Initialize the game position
+    initial_board = None  # Define initial board state
+    initial_position = GamePosition(initial_board)
+
+    # Perform Minimax search
+    score, best_move = minimax(initial_position, True)
+
+    # Print the score and best move
+    print("Score:", score)
+    print("Best Move:", best_move)
