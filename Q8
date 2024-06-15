@@ -1,0 +1,24 @@
+
+def dfs_tree(tree, node, depth=0):
+    if node is None:
+        return
+    print("  " * depth + node)
+    for child in tree.get(node, []):
+        dfs_tree(tree, child, depth + 1)
+
+if __name__ == "__main__":
+    # Example tree represented as a dictionary
+    tree = {
+        'A': ['B', 'C'],
+        'B': ['D', 'E'],
+        'C': ['F'],
+        'D': [],
+        'E': ['G', 'H'],
+        'F': [],
+        'G': [],
+        'H': []
+    }
+
+    root_node = 'A'
+    print("DFS traversal on the tree starting from root node A:")
+    dfs_tree(tree, root_node)
